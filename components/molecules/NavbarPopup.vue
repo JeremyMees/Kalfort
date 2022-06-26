@@ -11,7 +11,7 @@ const index = useIndexStore()
     <div class="flex flex-col gap-2">
       <div class="flex flex-row justify-end gap-2 group cursor-pointer text-red-400" @click="$emit('close')">
         <div>Close</div>
-        <Close class="w-6 h-6 group-hover:scale-125" />
+        <Close class="w-6 h-6 group-hover:scale-125 duration-200 ease-in-out" />
       </div>
       <div class="flex flex-col gap-4">
         <RoutingCard
