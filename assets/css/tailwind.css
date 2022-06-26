@@ -1,0 +1,107 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply body-normal bg-slate-900 text-white antialiased no-scrollbar;
+  }
+}
+
+@layer utilities {
+  .title-normal {
+    @apply font-title;
+    font-size: 1.25rem;
+    font-weight: 800;
+    line-height: 1.5rem;
+    @media (min-width: 768px) {
+      font-size: 1.25rem;
+      line-height: 1.5rem;
+    }
+    @media (min-width: 1024px) {
+      font-size: 1.5rem;
+      line-height: 1.5rem;
+    }
+    @media (min-width: 1440px) {
+      font-size: 1.5rem;
+      line-height: 1.5rem;
+    }
+  }
+
+  .title-subtle {
+    @apply font-title;
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1.25rem;
+    @media (min-width: 768px) {
+      font-size: 1.125rem;
+      line-height: 1.25rem;
+    }
+    @media (min-width: 1024px) {
+      font-size: 1.25rem;
+      line-height: 1.25rem;
+    }
+    @media (min-width: 1440px) {
+      font-size: 1.25rem;
+      line-height: 1.25rem;
+    }
+  }
+
+  .body-normal {
+    @apply font-text;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    @media (min-width: 768px) {
+      font-size: 1.125rem;
+      line-height: 1.5rem;
+    }
+    @media (min-width: 1024px) {
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+    }
+  }
+
+  .body-small {
+    @apply font-text;
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+    @media (min-width: 768px) {
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+    }
+    @media (min-width: 1024px) {
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+  }
+
+  .call-to-action {
+    @apply font-text;
+    font-weight: 800;
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+    @media (min-width: 768px) {
+      font-size: 1rem;
+      line-height: 1.25rem;
+    }
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .shadow-gray {
+    box-shadow: 0 1px 3px 0 #282828;
+  }
+
+  .shadow-gray-xl {
+    box-shadow: rgba(40, 40, 40, 0.12) 0px 2px 4px 0px, rgba(40, 40, 40, 0.32) 0px 2px 16px 0px;
+  }
+}
