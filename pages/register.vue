@@ -1,6 +1,7 @@
 <script setup>
 import { useVuelidate } from '@vuelidate/core'
 import { email, required, minLength, maxLength, integer, minValue } from '@vuelidate/validators'
+import Close from '~/assets/icons/close.svg'
 
 const page = ref(0)
 const error = ref(null)
@@ -82,6 +83,9 @@ function randomAvatar() {
     <div
       class="flex flex-col gap-10 max-w-md md:!max-w-xl mx-auto w-full sm:p-4 rounded sm:shadow-gray-xl sm:bg-slate-800 sm:absolute sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2"
     >
+      <NuxtLink to="/" class="absolute right-5 top-5 focus:outline-none">
+        <Close class="w-6 h-6 hover:scale-125 text-red-400 duration-200 ease-in-out" />
+      </NuxtLink>
       <p class="title-normal">Create a account</p>
       <div class="flex flex-col gap-4 py-8 items-center">
         <div

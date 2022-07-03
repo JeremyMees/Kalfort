@@ -1,5 +1,6 @@
 <script setup>
 import * as kolibri from '~/assets/animations/kolibri.json'
+import Close from '~/assets/icons/close.svg'
 
 const animation = ref(kolibri)
 const forgotPassword = ref(false)
@@ -22,6 +23,9 @@ function sendResetPasswordEmail() {}
     <div
       class="max-w-md md:!max-w-xl mx-auto w-full sm:p-4 rounded sm:shadow-gray-xl sm:bg-slate-800 sm:absolute sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2"
     >
+      <NuxtLink to="/" class="absolute right-5 top-5 focus:outline-none">
+        <Close class="w-6 h-6 hover:scale-125 text-red-400 duration-200 ease-in-out cursor-pointer" />
+      </NuxtLink>
       <p class="title-normal">Login</p>
       <Vue3Lottie :animationData="animation" class="w-[300px] h-[300px] scale-110 mx-auto" />
       <form v-if="!forgotPassword" @submit.prevent="login()" class="flex flex-col gap-4">
