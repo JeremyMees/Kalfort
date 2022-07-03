@@ -38,5 +38,6 @@ const icons = {
   level: import('../../assets/icons/level.svg'),
   players: import('../../assets/icons/players.svg'),
   profile: import('../../assets/icons/profile.svg'),
+  character: import('../../assets/icons/character.svg'),
 }
 </script>

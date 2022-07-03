@@ -9,12 +9,12 @@ export default defineEventHandler(async event => {
   const db = getFirestore()
   const query = useQuery(event)
   if (Object.keys(query).length === 0) {
-    const playersSnap = await db.collection('users').get()
-    return playersSnap.docs.map(doc => {
+    const charactersSnap = await db.collection('characters').get()
+    return charactersSnap.docs.map(doc => {
       return { uuid: doc.id, ...doc.data() }
     })
   } else {
-    const playerSnap = await db.collection('users').where('character_name', '==', query.name).get()
-    return { uuid: playerSnap.docs[0].id, ...playerSnap.docs[0].data() }
+    const characterSnap = await db.collection('characters').where('character_name', '==', query.name).get()
+    return { uuid: characterSnap.docs[0].id, ...characterSnap.docs[0].data() }
   }
 })
