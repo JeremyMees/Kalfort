@@ -33,7 +33,7 @@ onMounted(() => {
         :min="min"
         :max="max"
         name="input"
-        class="w-full px-2 bg-inherit border-2 border-slate-500 focus-visible:ring ring-slate-400 rounded h-10 text-sm outline-none"
+        class="w-full px-2 !bg-slate-900 border-2 border-slate-500 focus-visible:ring ring-slate-400 rounded h-10 text-sm outline-none"
         :placeholder="placeholder ? placeholder : label"
         autocomplete="off"
       />

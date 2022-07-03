@@ -23,6 +23,7 @@
     "formidable": "^2.0.1",
     "pinia": "^2.0.14",
     "vite-svg-loader": "^3.4.0",
+    "vue3-lottie": "^2.2.5",
     "vuelidate": "^0.7.7"
   }
 }

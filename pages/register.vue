@@ -61,8 +61,8 @@ async function createAccount() {
     // )
     // await fetch('/api/v1/assets/add', { method: 'POST', body: formData })
   }
-  const user = await useFetch('/api/v1/auth/user', { method: 'POST', body: newUser })
-  if (user.error) error.value = user.message
+  // const user = await useFetch('/api/v1/auth/user', { method: 'POST', body: newUser })
+  // if (user.error) error.value = user.message
 }
 
 function randomAvatar() {
@@ -113,7 +113,7 @@ function randomAvatar() {
         <p v-if="error" class="text-red-400 text-xs pt-1">{{ error }}</p>
         <div class="flex flex-row gap-4">
           <Button type="submit"> Create </Button>
-          <Button type="button" transparent color="secondary"> Already a account </Button>
+          <Button transparent color="secondary"> Already a account </Button>
         </div>
       </form>
     </div>
