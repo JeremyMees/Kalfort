@@ -1,13 +1,9 @@
 <script setup>
 import * as kolibri from '~/assets/animations/kolibri.json'
-// import { signInWithEmailAndPassword } from 'firebase/auth'
 
-const { $firebaseAuth } = useNuxtApp()
 const animation = ref(kolibri)
-// const auth = reactive({ email: '', password: '' })
+const auth = reactive({ email: '', password: '' })
 const error = ref(null)
-
-// onMounted(() => console.log($auth))
 
 function login() {}
 </script>
@@ -20,8 +16,8 @@ function login() {}
       <p class="title-normal">Login</p>
       <Vue3Lottie :animationData="animation" class="w-[300px] h-[300px] scale-110 mx-auto" />
       <form @submit.prevent="login()" class="flex flex-col gap-4">
-        <!-- <Input v-model="auth.email" type="email" label="Email address" required />
-        <Input v-model="auth.password" type="password" label="Password" required /> -->
+        <Input v-model="auth.email" type="email" label="Email address" required />
+        <Input v-model="auth.password" type="password" label="Password" required />
         <p v-if="error" class="text-red-400 text-xs pt-1">{{ error }}</p>
         <div class="flex flex-row gap-4 max-w-[300px]">
           <Button type="submit"> Login </Button>
