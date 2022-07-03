@@ -79,7 +79,9 @@ function randomAvatar() {
 
 <template>
   <div class="inset-0 fixed z-20 p-4 bg-slate-900 overflow-auto no-scrollbar">
-    <div v-if="page === 0" class="flex flex-col gap-4">
+    <div
+      class="flex flex-col gap-10 max-w-md md:!max-w-xl mx-auto w-full sm:p-4 rounded sm:shadow-gray-xl sm:bg-slate-800 sm:absolute sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2"
+    >
       <p class="title-normal">Create a account</p>
       <div class="flex flex-col gap-4 py-8 items-center">
         <div
@@ -113,7 +115,9 @@ function randomAvatar() {
         <p v-if="error" class="text-red-400 text-xs pt-1">{{ error }}</p>
         <div class="flex flex-row gap-4">
           <Button type="submit"> Create </Button>
-          <Button transparent color="secondary"> Already a account </Button>
+          <NuxtLink to="login" tabindex="-1">
+            <Button transparent color="secondary"> Already a account </Button>
+          </NuxtLink>
         </div>
       </form>
     </div>
