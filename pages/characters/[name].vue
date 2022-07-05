@@ -2,7 +2,10 @@
 import Close from '~/assets/icons/close.svg'
 
 const route = useRoute()
-const { pending, data: character } = useLazyFetch(`/api/v1/character/get?name=${route.params.name}`)
+const { pending, data: character } = useFetch('/api/v1/characters/get_with_name', {
+  method: 'POST',
+  body: { name: route.params.name },
+})
 </script>
 
 <template>
@@ -12,12 +15,10 @@ const { pending, data: character } = useLazyFetch(`/api/v1/character/get?name=${
       <Close class="w-6 h-6 duration-200 ease-in-out hover:scale-125 text-red-400 cursor-pointer" />
     </NuxtLink>
     <div class="flex gap-4 items-center">
-      <div class="h-[8rem] w-[8rem] min-h-[8rem] min-w-[8rem] rounded-xl overflow-hidden">
-        <img :src="character.image" :alt="character.name" class="w-full h-full object-cover" />
-      </div>
-      <div class="flex flex-col gap-2">
+      <ImagesSwiper :images="character.images" />
+      <div class="flex flex-col gap-2 grow">
         <p class="title-normal">{{ character.character_name }}</p>
-        <p class="body-small">By {{ character.name }}</p>
+        <p class="body-small">By {{ character.player_name }}</p>
       </div>
     </div>
     <div
@@ -53,10 +54,10 @@ const { pending, data: character } = useLazyFetch(`/api/v1/character/get?name=${
         {{ character.backstory }}
       </div>
     </div>
-    <div v-if="character.appearence" class="flex flex-col gap-2 border border-slate-700 rounded p-2 shadow-gray">
-      <p class="title-subtle">Appearence</p>
+    <div v-if="character.appearance" class="flex flex-col gap-2 border border-slate-700 rounded p-2 shadow-gray">
+      <p class="title-subtle">Appearance</p>
       <div class="body-small">
-        {{ character.appearence }}
+        {{ character.appearance }}
       </div>
     </div>
   </div>
