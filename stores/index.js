@@ -11,7 +11,7 @@ export const useIndexStore = defineStore('index', {
         { path: 'dungeon-masters', name: 'Dungeon Masters', icon: 'dms' },
         { path: 'achievements', name: 'Achievements', icon: 'achievement' },
         { path: 'leaderboards', name: 'Leaderboards', icon: 'leaderboards' },
-        { path: 'level', name: 'Leveling', icon: 'level' },
+        { path: 'leveling', name: 'Leveling', icon: 'level' },
         { path: 'profile', name: 'Profile', icon: 'profile' },
       ],
       levels: [
@@ -27,7 +27,7 @@ export const useIndexStore = defineStore('index', {
         { level: 9, sessions: 26 },
         { level: 10, sessions: 30 },
       ],
-      user:null
+      user: null,
     }
   },
 })

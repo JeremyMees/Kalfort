@@ -8,15 +8,11 @@ watch(route, () => (isOpen.value = false))
 <template>
   <div>
     <div
-      class="md:hidden rounded-xl backdrop-blur-xl shadow-gray-xl py-2 min-w-full px-4 flex flex-row justify-between items-center relative z-10 bg-slate-800"
+      class="xl:hidden rounded-xl backdrop-blur-xl shadow-gray-xl py-2 min-w-full px-4 flex flex-row justify-between items-center relative z-10 bg-slate-800"
       :class="{ 'shadow-gray': isOpen }"
     >
       <div class="h-8 w-8">
-        <img
-          src="https://avatars.dicebear.com/api/identicon/krakky.svg"
-          alt="identicon"
-          class="h-full w-full object-cover"
-        />
+        <img src="https://picsum.photos/200/300" alt="avatar" class="h-full w-full object-cover rounded" />
       </div>
       <p class="font-title text-lg">kalfort</p>
       <Hamburger v-model="isOpen" @toggled="isOpen = !isOpen" />
