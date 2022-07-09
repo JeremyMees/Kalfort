@@ -2,7 +2,7 @@
 import Chevron from '~/assets/icons/chevron.svg'
 import { useIndexStore } from '~/stores/index'
 const index = useIndexStore()
-const isOpen = ref(true)
+const isOpen = ref(false)
 </script>
 
 <template>

@@ -39,13 +39,14 @@ const index = useIndexStore()
         :path="route.path"
         :icon="route.icon"
       />
-      <div
+      <NuxtLink
+        to="/logout"
         tabindex="0"
         class="shadow-gray px-4 py-3 rounded cursor-pointer w-fit ease-in-out duration-200 relative hover:-translate-y-1 group flex flex-row gap-x-2 items-center bg-slate-800"
       >
         <Logout class="group-hover:scale-125 focus-visible:scale-125 ease-in-out duration-200 w-5 h-5" />
         <div class="call-to-action">Logout</div>
-      </div>
+      </NuxtLink>
     </div>
   </div>
 </template>
