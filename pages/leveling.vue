@@ -1,6 +1,5 @@
 <script setup>
-import { useIndexStore } from '~/stores/index'
-const index = useIndexStore()
+const { pending, data: levels } = useLazyFetch('/api/v1/levels/get_all')
 </script>
 
 <template>
@@ -15,8 +14,8 @@ const index = useIndexStore()
           </tr>
         </thead>
         <tbody>
-          <tr v-for="level in index.levels" :key="level.level" class="odd:bg-slate-800/30">
-            <td class="px-5 sm:px-16">{{ level.sessions }}</td>
+          <tr v-for="level in levels" :key="level.level" class="odd:bg-slate-800/30">
+            <td class="px-5 sm:px-16">{{ level.sessions_played }}</td>
             <td class="px-5 sm:px-16">{{ level.level }}</td>
           </tr>
           <tr></tr>
