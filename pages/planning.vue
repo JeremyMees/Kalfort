@@ -9,7 +9,7 @@ onMounted(() => getData())
 
 async function signUp(session, index) {
   const cel = numberToString(session.split('_')[1]) + getCelNumber(session, index)
-  const apply = await $fetch('/api/v1/planning/join_session', { method: 'POST', body: { cel, value: 'tester' } })
+  const apply = await $fetch('/api/v1/planning/join_session', { method: 'POST', body: { cel, value: 'username hier' } })
   if (apply) {
     planning.value = null
     getData()
@@ -22,7 +22,6 @@ async function getData() {
   selectedOptions.value = Object.keys(transformedData.sessions)
   activeIndex.value = Object.keys(transformedData.sessions).length - 1
   planning.value = transformedData
-  console.log(planning.value)
 }
 
 function checkIfOldDate(date) {
