@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     dirs: ['~/components/atoms', '~/components/molecules', '~/components/organisms', '~/components/templates'],
   },
   css: ['~/assets/css/global.css'],
-  buildModules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxtjs/pwa'],
+  buildModules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxtjs/pwa', 'floating-vue/nuxt'],
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',
     configPath: '~/tailwind.config.js',

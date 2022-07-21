@@ -6,8 +6,8 @@ const isOpen = ref(false)
 </script>
 
 <template>
-  <div class="rounded-xl shadow-gray-xl bg-slate-800 flex flex-col max-h-full" v-click-outside="() => (isOpen = false)">
-    <div class="p-2 w-full border-b-2 border-slate-700">
+  <div class="rounded-xl shadow-gray-xl bg-slate-700 flex flex-col max-h-full" v-click-outside="() => (isOpen = false)">
+    <div class="p-2 w-full border-b-2 border-slate-600">
       <img src="https://picsum.photos/200/300" alt="avatar" class="h-8 w-8 rounded mx-auto" />
     </div>
     <div class="p-2 h-[calc(100%-110px)] overflow-y-auto no-scrollbar ease-in-out duration-200">
@@ -23,10 +23,10 @@ const isOpen = ref(false)
       />
       <SidebarLink :open="isOpen" name="Logout" path="/logout" icon="logout" />
     </div>
-    <div class="w-full h-8 border-t-2 border-slate-700">
+    <div class="w-full h-8 border-t-2 border-slate-600">
       <div class="h-2"></div>
       <Chevron
-        class="w-6 h-6 mx-auto cursor-pointer hover:scale-125 focus-visible:scale-125 ease-in-out duration-200"
+        class="w-4 h-5 mx-auto cursor-pointer hover:scale-125 focus-visible:scale-125 ease-in-out duration-200"
         :class="{ 'rotate-180': isOpen }"
         @click="isOpen = !isOpen"
       />
