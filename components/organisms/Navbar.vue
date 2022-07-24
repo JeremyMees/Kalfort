@@ -8,7 +8,7 @@ watch(route, () => (isOpen.value = false))
 <template>
   <div>
     <div
-      class="xl:hidden rounded-xl backdrop-blur-xl shadow-gray-xl py-2 min-w-full px-4 flex flex-row justify-between items-center relative z-10 bg-slate-700"
+      class="rounded-xl backdrop-blur-xl shadow-gray-xl py-2 min-w-full px-4 flex flex-row justify-between items-center relative z-10 bg-slate-700"
       :class="{ 'shadow-gray': isOpen }"
     >
       <div class="h-8 w-8">

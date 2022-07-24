@@ -3,7 +3,6 @@ defineProps({
   icon: { type: String, required: true },
   name: { type: String, required: true },
   path: { type: String, required: true },
-  open: { type: Boolean, required: true },
 })
 
 function getIcon(icon) {
@@ -13,14 +12,12 @@ function getIcon(icon) {
 
 <template>
   <div class="group my-6">
-    <NuxtLink :to="path" class="flex gap-4" :class="{ 'justify-center': !open }">
+    <NuxtLink :to="path" class="flex gap-4 justify-center">
       <component
         :is="getIcon(icon)"
         class="group-hover:scale-125 focus-visible:scale-125 ease-in-out duration-200 w-5 h-5"
+        v-tooltip.right="name"
       />
-      <p class="text-xs" :class="{ hidden: !open }">
-        {{ name }}
-      </p>
     </NuxtLink>
   </div>
 </template>

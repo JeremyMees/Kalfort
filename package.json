@@ -18,6 +18,7 @@
     "@pinia/nuxt": "^0.1.9",
     "@vuelidate/core": "^2.0.0-alpha.42",
     "@vuelidate/validators": "^2.0.0-alpha.30",
+    "@vueuse/core": "^8.9.4",
     "click-outside-vue3": "^4.0.1",
     "firebase": "^9.8.4",
     "firebase-admin": "^11.0.0",

@@ -48,7 +48,7 @@ function getCelNumber(session, index) {
   <div v-if="!planning" class="title-normal absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
     Loading ...
   </div>
-  <div v-else class="flex flex-col gap-8 p-4 pb-20 xl:pb-4">
+  <div v-else class="flex flex-col gap-8 p-4 xl:pb-4">
     <p class="title-normal">Planning</p>
     <div class="border border-slate-700 rounded flex flex-col">
       <div class="flex items-center gap-5 justify-center bg-slate-800/30 p-4">
@@ -81,24 +81,26 @@ function getCelNumber(session, index) {
             >
               {{ player }}
             </div>
-            <div
-              v-for="spot in session.maxPlayers - session.players.filter(player => player !== '').length"
-              :key="spot"
-              class="text-center body-small py-2"
-            >
-              <VDropdown v-if="checkIfOldDate(session.day)">
-                <button
-                  class="text-indigo-400 ring-indigo-200 outline-none focus-visible:ring active:scale-110 ease-in-out duration-300"
-                >
-                  Free spot
-                </button>
-                <template #popper>
-                  <div class="flex flex-row gap-4 p-4">
-                    <Button @click="signUp(selectedOptions[activeIndex], index)" v-close-popper> Join </Button>
-                    <Button color="danger" v-close-popper> Cancel </Button>
-                  </div>
-                </template>
-              </VDropdown>
+            <div v-if="session.maxPlayers - session.players.filter(player => player !== '').length > 0">
+              <div
+                v-for="spot in session.maxPlayers - session.players.filter(player => player !== '').length"
+                :key="spot"
+                class="text-center body-small py-2"
+              >
+                <VDropdown v-if="checkIfOldDate(session.day)">
+                  <button
+                    class="text-indigo-400 ring-indigo-200 outline-none focus-visible:ring active:scale-110 ease-in-out duration-300"
+                  >
+                    Free spot
+                  </button>
+                  <template #popper>
+                    <div class="flex flex-row gap-4 p-4">
+                      <Button @click="signUp(selectedOptions[activeIndex], index)" v-close-popper> Join </Button>
+                      <Button color="danger" v-close-popper> Cancel </Button>
+                    </div>
+                  </template>
+                </VDropdown>
+              </div>
             </div>
           </div>
         </div>

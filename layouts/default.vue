@@ -1,13 +1,18 @@
 <script setup>
 const loaded = ref(false)
+
 onMounted(() => (loaded.value = true))
 </script>
 
 <template>
-  <div class="h-screen px-4 sm:px-8 md:px-10 lg:px-16 pt-4 mx-auto" style="max-width: 1800px">
-    <Sidebar v-if="loaded" class="fixed z-10 hidden xl:block left-2 inset-y-2" />
-    <slot class="overflow-x-hidden" />
-    <div class="h-16 w-full md:hidden" />
-    <Navbar v-if="loaded" class="fixed bottom-2 z-10 inset-x-2 sm:inset-x-4" />
+  <div class="max-h-screen h-screen w-screen max-w-screen flex flex-col lg:flex-row">
+    <Sidebar v-if="loaded" class="hidden lg:block m-2" />
+    <div
+      class="px-4 sm:px-8 md:px-10 lg:px-8 pt-4 mx-auto grow w-full h-full overflow-y-auto no-scrollbar"
+      style="max-width: 1800px"
+    >
+      <slot class="overflow-x-hidden" />
+    </div>
+    <Navbar v-if="loaded" class="lg:hidden relative z-10 w-full p-2 sm:p-4" />
   </div>
 </template>
