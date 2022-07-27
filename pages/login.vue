@@ -3,6 +3,7 @@ import * as kolibri from '~/assets/animations/kolibri.json'
 import Close from '~/assets/icons/close.svg'
 
 const animation = ref(kolibri)
+const router = useRouter()
 const forgotPassword = ref(false)
 const route = useRoute()
 const auth = reactive({ email: '', password: '' })
@@ -13,7 +14,16 @@ onMounted(() => {
   if (Object.keys(route.query).includes('forgot') && route.query['forgot'] === 'true') forgotPassword.value = true
 })
 
-function login() {}
+async function login() {
+  const user = await signIn(auth.email, auth.password)
+  if (!user.error) {
+    console.log(user)
+    router.push({ path: '/home' })
+  } else {
+    auth.email = ''
+    auth.passowrd = ''
+  }
+}
 
 function sendResetPasswordEmail() {}
 </script>

@@ -7,7 +7,7 @@ const router = useRouter()
 const error = ref(null)
 const image = ref(null)
 const imageFile = ref(null)
-const profile = reactive({ displayName: 'jeremy mees', email: 'jeremymees123@gmail.com', password: 'Lies-1692' })
+const profile = reactive({ displayName: '', email: '', password: '' })
 // const character = reactive({
 //   name: null,
 //   race: null,
