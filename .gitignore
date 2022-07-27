@@ -10,3 +10,4 @@ sw.*
 kalfort-firebase-adminsdk-m32w2-f316a7f6f8.json
 kalfort-6b24ba5caaab.json
 firebaseConfig.json
+composables/firebase.js

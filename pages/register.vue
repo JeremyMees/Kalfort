@@ -1,22 +1,22 @@
 <script setup>
 import { useVuelidate } from '@vuelidate/core'
-import { email, required, minLength, maxLength, integer, minValue } from '@vuelidate/validators'
+import { email, required, minLength, maxLength } from '@vuelidate/validators'
 import Close from '~/assets/icons/close.svg'
 
-const page = ref(0)
+const router = useRouter()
 const error = ref(null)
 const image = ref(null)
 const imageFile = ref(null)
-const profile = reactive({ displayName: null, email: null, password: null })
-const character = reactive({
-  name: null,
-  race: null,
-  class: null,
-  alignment: null,
-  sessions_played: 0,
-  backstory: null,
-  application: null,
-})
+const profile = reactive({ displayName: 'jeremy mees', email: 'jeremymees123@gmail.com', password: 'Lies-1692' })
+// const character = reactive({
+//   name: null,
+//   race: null,
+//   class: null,
+//   alignment: null,
+//   sessions_played: 0,
+//   backstory: null,
+//   application: null,
+// })
 const profileRules = {
   displayName: { required, minLengthValue: minLength(6), maxLengthValue: maxLength(50) },
   email: { required, email, maxLengthValue: maxLength(50) },
@@ -26,56 +26,33 @@ const profileRules = {
     maxLengthValue: maxLength(50),
   },
 }
-const characterRules = {
-  name: { required, minLengthValue: minLength(3), maxLengthValue: maxLength(50) },
-  race: { required, minLengthValue: minLength(3), maxLengthValue: maxLength(50) },
-  class: { required, minLengthValue: minLength(3), maxLengthValue: maxLength(50) },
-  alignment: { maxLengthValue: maxLength(50), minLengthValue: minLength(3) },
-  sessions_played: { required, integer, minValueValue: minValue(1) },
-}
+// const characterRules = {
+//   name: { required, minLengthValue: minLength(3), maxLengthValue: maxLength(50) },
+//   race: { required, minLengthValue: minLength(3), maxLengthValue: maxLength(50) },
+//   class: { required, minLengthValue: minLength(3), maxLengthValue: maxLength(50) },
+//   alignment: { maxLengthValue: maxLength(50), minLengthValue: minLength(3) },
+//   sessions_played: { required, integer, minValueValue: minValue(1) },
+// }
 const vProfile$ = useVuelidate(profileRules, profile)
-const vCharacter$ = useVuelidate(characterRules, character)
+// const vCharacter$ = useVuelidate(characterRules, character)
 
-onMounted(() => {
-  randomAvatar()
-})
+onMounted(() => randomAvatar())
 
 async function createAccount() {
   error.value = null
   await vProfile$.value.$validate()
   if (vProfile$.value.$invalid) return
   let newUser = { ...profile, photoURL: image.value }
-  if (imageFile.value) {
-    // const formData = new FormData()
-    // formData.append('asset', imageFile.value)
-    // formData.append(
-    //   'fullPath',
-    //   `images/players/${profile.displayName.replaceAll(' ', '_') + '-' + (Math.random() + 1).toString(36).substring(7)}`
-    // )
-    // formData.append('type', imageFile.value.type)
-    // await useAsyncData('file', () =>
-    //   $fetch('/api/v1/assets/add', {
-    //     method: 'POST',
-    //     body: formData,
-    //     headers: { 'Content-Type': 'multipart/form-data' },
-    //   })
-    // )
-    // await fetch('/api/v1/assets/add', { method: 'POST', body: formData })
-  }
-  // const user = await useFetch('/api/v1/auth/user', { method: 'POST', body: newUser })
-  // if (user.error) error.value = user.message
+  if (imageFile.value) newUser.photoURL = await uploadFile(`images/players/`, imageFile.value)
+  const user = await $fetch('/api/v1/auth/create', { method: 'POST', body: newUser })
+  if (user.error) error.value = user.message
+  else router.push({ path: '/login' })
 }
 
 function randomAvatar() {
   image.value = `https://avatars.dicebear.com/api/big-smile/${(Math.random() + 1).toString(36).substring(7)}.svg`
   imageFile.value = null
 }
-
-// function convertImage() {
-//   const reader = new FileReader()
-//   reader.onload = () => (convertedImage.value = reader.result)
-//   reader.readAsDataURL(imageFile.value)
-// }
 </script>
 
 <template>
