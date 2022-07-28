@@ -4,6 +4,8 @@ import Close from '~/assets/icons/close.svg'
 
 const animation = ref(kolibri)
 const router = useRouter()
+const supabase = useSupabaseClient()
+const config = useRuntimeConfig()
 const forgotPassword = ref(false)
 const route = useRoute()
 const auth = reactive({ email: '', password: '' })
@@ -15,17 +17,14 @@ onMounted(() => {
 })
 
 async function login() {
-  const user = await signIn(auth.email, auth.password)
-  if (!user.error) {
-    console.log(user)
-    router.push({ path: '/home' })
-  } else {
-    auth.email = ''
-    auth.passowrd = ''
-  }
+  await supabase.auth.signIn(auth)
+  router.push({ path: '/' })
 }
 
-function sendResetPasswordEmail() {}
+async function sendResetPasswordEmail() {
+  // redirecteTo and follow this https://supabase.com/docs/reference/javascript/auth-api-resetpasswordforemail
+  await supabase.auth.api.resetPasswordForEmail(resetEmail.value, { redirectTo: `${config.baseUrl}/reset-password` })
+}
 </script>
 
 <template>

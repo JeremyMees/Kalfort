@@ -1,5 +1,13 @@
 <script setup>
 import Close from '~/assets/icons/close.svg'
+
+const supabase = useSupabaseClient()
+const router = useRouter()
+
+async function logout() {
+  await supabase.auth.signOut()
+  router.push({ path: '/login' })
+}
 </script>
 
 <template>
@@ -11,9 +19,9 @@ import Close from '~/assets/icons/close.svg'
         <Close class="w-6 h-6 hover:scale-125 text-red-400 duration-200 ease-in-out cursor-pointer" />
       </NuxtLink>
       <p class="title-normal pb-10">Logout</p>
-      <img src="@/assets/images/d20.png" alt="d20" class="mx-auto h-[250px] aspect-square animate-pulse" />
+      <p>Are you sure you want to logout?</p>
       <div class="flex flex-row gap-4 pt-10">
-        <Button type="submit" color="primary"> Logout </Button>
+        <Button @click="logout" color="primary"> Logout </Button>
         <NuxtLink to="/" class="focus:outline-none">
           <Button transparent color="secondary" @click="forgotPassword = false"> Back </Button>
         </NuxtLink>

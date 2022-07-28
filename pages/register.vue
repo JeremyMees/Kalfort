@@ -1,13 +1,16 @@
 <script setup>
+import { v4 as uuidv4 } from 'uuid'
 import { useVuelidate } from '@vuelidate/core'
 import { email, required, minLength, maxLength } from '@vuelidate/validators'
 import Close from '~/assets/icons/close.svg'
 
 const router = useRouter()
+const supabase = useSupabaseClient()
+const config = useRuntimeConfig()
 const error = ref(null)
 const image = ref(null)
 const imageFile = ref(null)
-const profile = reactive({ displayName: '', email: '', password: '' })
+const profile = reactive({ name: '', email: '', password: '' })
 // const character = reactive({
 //   name: null,
 //   race: null,
@@ -18,7 +21,7 @@ const profile = reactive({ displayName: '', email: '', password: '' })
 //   application: null,
 // })
 const profileRules = {
-  displayName: { required, minLengthValue: minLength(6), maxLengthValue: maxLength(50) },
+  name: { required, minLengthValue: minLength(6), maxLengthValue: maxLength(50) },
   email: { required, email, maxLengthValue: maxLength(50) },
   password: {
     required,
@@ -42,11 +45,17 @@ async function createAccount() {
   error.value = null
   await vProfile$.value.$validate()
   if (vProfile$.value.$invalid) return
-  let newUser = { ...profile, photoURL: image.value }
-  if (imageFile.value) newUser.photoURL = await uploadFile(`images/players/`, imageFile.value)
-  const user = await $fetch('/api/v1/auth/create', { method: 'POST', body: newUser })
-  if (user.error) error.value = user.message
-  else router.push({ path: '/login' })
+  let newUser = { ...profile, image: image.value }
+  if (imageFile.value) {
+    const fileName = uuidv4()
+    const upload = await supabase.storage.from('avatars').upload(fileName, imageFile.value)
+    const { publicURL } = supabase.storage.from('avatars').getPublicUrl(fileName)
+    newUser.image = publicURL
+  }
+  const { email, password, ...data } = newUser
+  const { user, error: userError } = await supabase.auth.signUp({ email: email, password: password }, { data: data })
+  if (userError) error.value = user.message
+  else router.push({ path: '/' })
 }
 
 function randomAvatar() {
@@ -78,13 +87,7 @@ function randomAvatar() {
         </div>
       </div>
       <form @submit.prevent="createAccount()" class="flex flex-col gap-4">
-        <Input
-          v-model="profile.displayName"
-          type="text"
-          label="First & last name"
-          :errors="vProfile$.displayName.$errors"
-          required
-        />
+        <Input v-model="profile.name" type="text" label="First & last name" :errors="vProfile$.name.$errors" required />
         <Input v-model="profile.email" type="email" label="Email address" :errors="vProfile$.email.$errors" required />
         <Input
           v-model="profile.password"

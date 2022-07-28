@@ -1,6 +1,7 @@
 <script setup>
 const isOpen = ref(false)
 const route = useRoute()
+const user = useSupabaseUser()
 
 watch(route, () => (isOpen.value = false))
 </script>
@@ -11,8 +12,8 @@ watch(route, () => (isOpen.value = false))
       class="rounded-xl backdrop-blur-xl shadow-gray-xl py-2 min-w-full px-4 flex flex-row justify-between items-center relative z-10 bg-slate-700"
       :class="{ 'shadow-gray': isOpen }"
     >
-      <div class="h-8 w-8">
-        <img src="https://picsum.photos/200/300" alt="avatar" class="h-full w-full object-cover rounded" />
+      <div class="h-8 w-8" >
+        <img v-if="user" :src="user.user_metadata.image" alt="avatar" class="h-full w-full object-cover rounded" />
       </div>
       <p class="font-title text-lg">kalfort</p>
       <Hamburger v-model="isOpen" @toggled="isOpen = !isOpen" />
