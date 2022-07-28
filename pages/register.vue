@@ -6,7 +6,6 @@ import Close from '~/assets/icons/close.svg'
 
 const router = useRouter()
 const supabase = useSupabaseClient()
-const config = useRuntimeConfig()
 const error = ref(null)
 const image = ref(null)
 const imageFile = ref(null)
@@ -55,7 +54,7 @@ async function createAccount() {
   const { email, password, ...data } = newUser
   const { user, error: userError } = await supabase.auth.signUp({ email: email, password: password }, { data: data })
   if (userError) error.value = user.message
-  else router.push({ path: '/' })
+  else router.push({ path: '/login' })
 }
 
 function randomAvatar() {

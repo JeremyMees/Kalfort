@@ -22,7 +22,7 @@ function pickFile() {
 
 <template>
   <div>
-    <Button :color="color" :transparent="transparent" @click="fileInput.click()">
+    <Button :color="color" :transparent="transparent" @click="fileInput.click()" class="active:!bg-blue-500">
       <slot />
     </Button>
     <input ref="fileInput" type="file" @input="pickFile" class="hidden" accept="image/*" />
