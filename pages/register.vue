@@ -9,7 +9,11 @@ const supabase = useSupabaseClient()
 const error = ref(null)
 const image = ref(null)
 const imageFile = ref(null)
-const profile = reactive({ name: '', email: '', password: '' })
+const player = ref(true)
+const dm = ref(false)
+const profile = reactive({ name: '', email: '', password: '', player: true, dm: false })
+const oneMustBeTrue = () => profile.player === true || profile.dm === true
+
 // const character = reactive({
 //   name: null,
 //   race: null,
@@ -22,11 +26,9 @@ const profile = reactive({ name: '', email: '', password: '' })
 const profileRules = {
   name: { required, minLengthValue: minLength(6), maxLengthValue: maxLength(50) },
   email: { required, email, maxLengthValue: maxLength(50) },
-  password: {
-    required,
-    minLengthValue: minLength(6),
-    maxLengthValue: maxLength(50),
-  },
+  password: { required, minLengthValue: minLength(6), maxLengthValue: maxLength(50) },
+  player: { oneMustBeTrue },
+  dm: { oneMustBeTrue },
 }
 // const characterRules = {
 //   name: { required, minLengthValue: minLength(3), maxLengthValue: maxLength(50) },
@@ -43,6 +45,7 @@ onMounted(() => randomAvatar())
 async function createAccount() {
   error.value = null
   await vProfile$.value.$validate()
+  if (!oneMustBeTrue()) error.value = 'You must be a player or a dungeon master, you could also be both'
   if (vProfile$.value.$invalid) return
   let newUser = { ...profile, image: image.value }
   if (imageFile.value) {
@@ -54,7 +57,10 @@ async function createAccount() {
   const { email, password, ...data } = newUser
   const { user, error: userError } = await supabase.auth.signUp({ email: email, password: password }, { data: data })
   if (userError) error.value = user.message
-  else router.push({ path: '/login' })
+  else {
+    await supabase.from('players').insert([{ ...data, email, user_id: user.id }])
+    router.push({ path: '/login' })
+  }
 }
 
 function randomAvatar() {
@@ -95,6 +101,10 @@ function randomAvatar() {
           :errors="vProfile$.password.$errors"
           required
         />
+        <div class="flex gap-8">
+          <ToggleSlider label="Player" v-model="profile.player" />
+          <ToggleSlider label="Dm" v-model="profile.dm" />
+        </div>
         <p v-if="error" class="text-red-400 text-xs pt-1">{{ error }}</p>
         <div class="flex flex-row gap-4">
           <Button type="submit"> Create </Button>

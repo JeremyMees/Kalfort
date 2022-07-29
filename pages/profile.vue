@@ -1,4 +1,6 @@
 <script setup>
+import Close from '~/assets/icons/close.svg'
+import Check from '~/assets/icons/check.svg'
 import { v4 as uuidv4 } from 'uuid'
 import { useVuelidate } from '@vuelidate/core'
 import { email, minLength, maxLength } from '@vuelidate/validators'
@@ -11,11 +13,20 @@ const edit = ref(false)
 const error = ref(null)
 const image = ref(null)
 const imageFile = ref(null)
-const profile = reactive({ name: null, email: null, password: null })
+const profile = reactive({
+  name: '',
+  email: '',
+  password: '',
+  player: user.value.user_metadata.player,
+  dm: user.value.user_metadata.dm,
+})
+const oneMustBeTrue = () => profile.player === true || profile.dm === true
 const rules = {
   name: { minLengthValue: minLength(6), maxLengthValue: maxLength(50) },
   email: { email, maxLengthValue: maxLength(50) },
   password: { minLengthValue: minLength(6), maxLengthValue: maxLength(50) },
+  player: { oneMustBeTrue },
+  dm: { oneMustBeTrue },
 }
 const vProfile$ = useVuelidate(rules, profile)
 
@@ -34,6 +45,7 @@ async function updateAccount() {
   let data = {}
   error.value = null
   await vProfile$.value.$validate()
+  if (!oneMustBeTrue()) error.value = 'You must be a player or a dungeon master, you could also be both'
   if (vProfile$.value.$invalid) return
   const { name, email, password } = profile
   if (email) updatedUser = { ...updatedUser, email }
@@ -45,17 +57,20 @@ async function updateAccount() {
     data = { ...data, image: publicURL }
   } else if (image.value) data = { ...data, image: image.value }
   if (profile.name) data = { ...data, name: name }
-  if (Object.keys(data).length > 0) updatedUser = { ...updatedUser, data }
-  if (Object.keys(updatedUser).length === 0) error.value = 'No values to update'
+  data = { ...data, dm: profile.dm, player: profile.player }
+  updatedUser = { ...updatedUser, data }
+  const { user, error: updateError } = await supabase.auth.update(updatedUser)
+  if (updateError) error.value = 'Something went wrong when updating profile page'
   else {
-    const { user, error: updateError } = await supabase.auth.update(updatedUser)
-    if (updateError) error.value = 'Something went wrong when updating profile page'
-    else {
-      profile.name = null
-      profile.email = null
-      profile.password = null
-      edit.value = false
-    }
+    const { data: nestedData, ...info } = updatedUser
+    await supabase
+      .from('players')
+      .update({ ...info, ...nestedData })
+      .eq('user_id', user.id)
+    profile.name = null
+    profile.email = null
+    profile.password = null
+    edit.value = false
   }
 }
 </script>
@@ -79,10 +94,14 @@ async function updateAccount() {
         <Button v-if="image" transparent @click="image = null"> Keep old image </Button>
       </div>
       <form v-if="edit" @submit.prevent="updateAccount()" class="flex flex-col gap-4 w-full">
-        <div>You only need to fill the inputs of which values you want to change</div>
+        <div class="text-xs">You only need to fill the inputs of which values you want to change</div>
         <Input v-model="profile.name" type="text" label="First & last name" :errors="vProfile$.name.$errors" />
         <Input v-model="profile.email" type="email" label="Email address" :errors="vProfile$.email.$errors" />
         <Input v-model="profile.password" type="password" label="Password" :errors="vProfile$.password.$errors" />
+        <div class="flex gap-8">
+          <ToggleSlider label="Player" v-model="profile.player" />
+          <ToggleSlider label="Dm" v-model="profile.dm" />
+        </div>
         <p v-if="error" class="text-red-400 text-xs pt-1">{{ error }}</p>
         <div class="flex flex-row gap-4">
           <Button type="submit"> Update </Button>
@@ -97,6 +116,16 @@ async function updateAccount() {
         <div class="flex flex-col sm:flex-row gap-2 md:gap-4">
           <p class="font-bold">Email:</p>
           <p>{{ user.email }}</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-2 md:gap-4 sm:items-center">
+          <p class="font-bold">Player:</p>
+          <Check v-if="user.user_metadata.player" class="h-4 w-4 text-green-300" />
+          <Close v-else class="h-4 w-4 text-red-400" />
+        </div>
+        <div class="flex flex-col sm:flex-row gap-2 md:gap-4 sm:items-center">
+          <p class="font-bold">Dungeon Master:</p>
+          <Check v-if="user.user_metadata.dm" class="h-4 w-4 text-green-300" />
+          <Close v-else class="h-4 w-4 text-red-400" />
         </div>
         <Button @click="edit = true"> Edit profile </Button>
       </div>
