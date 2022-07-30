@@ -2,6 +2,8 @@
 import * as kolibri from '~/assets/animations/kolibri.json'
 import Close from '~/assets/icons/close.svg'
 
+definePageMeta({ middleware: 'no-auth' })
+
 const animation = ref(kolibri)
 const router = useRouter()
 const supabase = useSupabaseClient()

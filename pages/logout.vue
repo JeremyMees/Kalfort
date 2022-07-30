@@ -1,6 +1,8 @@
 <script setup>
 import Close from '~/assets/icons/close.svg'
 
+definePageMeta({ middleware: 'auth' })
+
 const supabase = useSupabaseClient()
 const router = useRouter()
 

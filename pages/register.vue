@@ -4,6 +4,8 @@ import { useVuelidate } from '@vuelidate/core'
 import { email, required, minLength, maxLength } from '@vuelidate/validators'
 import Close from '~/assets/icons/close.svg'
 
+definePageMeta({ middleware: 'no-auth' })
+
 const router = useRouter()
 const supabase = useSupabaseClient()
 const error = ref(null)
