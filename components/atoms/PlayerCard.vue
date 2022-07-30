@@ -3,7 +3,7 @@ defineProps({ player: { type: Object, required: true } })
 </script>
 
 <template>
-  <NuxtLink :to="'/players/' + player.uid" class="w-full">
+  <NuxtLink :to="'/players/' + player.user_id" class="w-full">
     <div
       tabindex="0"
       class="shadow-gray outline-none items-center focus-visible:ring ring-red-400 px-4 py-3 rounded cursor-pointer ease-in-out duration-200 relative hover:-translate-y-1 group flex flex-row gap-x-4 bg-slate-800 w-full"

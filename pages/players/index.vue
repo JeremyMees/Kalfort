@@ -2,7 +2,7 @@
 const supabase = useSupabaseClient()
 const router = useRouter()
 
-const { data: players } = await useAsyncData('players', async () => {
+const { data: players, pending } = await useAsyncData('players', async () => {
   const { data, error } = await supabase.from('players').select('*')
   if (error) router.push({ path: '/' })
   else return data
@@ -10,7 +10,7 @@ const { data: players } = await useAsyncData('players', async () => {
 </script>
 
 <template>
-  <div v-if="players" class="title-normal absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">Loading ...</div>
+  <div v-if="pending" class="title-normal absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">Loading ...</div>
   <div v-else class="flex flex-col gap-8 max-h-full p-4">
     <p class="title-normal">{{ players.length }} Brave {{ players.length > 1 ? 'players' : 'player' }}</p>
     <div
